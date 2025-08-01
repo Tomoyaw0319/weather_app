@@ -21,7 +21,8 @@ def get_weather(request):
     result = {
         'city': city,
         'temperature': data['main']['temp'],           # 気温(℃)
-        'condition': data['weather'][0]['description'] # 天気の説明（日本語）
+        'condition': data['weather'][0]['description'], # 天気の説明（日本語）
+        'wind' : data['wind']['speed']
     }
 
     return Response(result)
