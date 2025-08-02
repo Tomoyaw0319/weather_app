@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework', # Djangoとreactをつなげる
+    'rest_framework.authtoken',
     'corsheaders',
     'weather',
 ]
@@ -53,6 +54,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Cors (reactからのアクセスを許可するもの)
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'weather_project.urls'
 
@@ -126,5 +130,3 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Cors (reactからのアクセスを許可するもの)
-CORS_ALLOW_ALL_ORIGINS = True

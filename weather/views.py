@@ -1,6 +1,10 @@
 import requests
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
 
 @api_view(['GET'])
 def get_weather(request):
@@ -26,3 +30,29 @@ def get_weather(request):
     }
 
     return Response(result)
+
+
+@csrf_exempt 
+def register(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            username = data.get('username')
+            email = data.get('email')
+            password = data.get('password')
+
+            if not username or not password:
+                return JsonResponse({'message': 'ユーザー名とパスワードは必須です'}, status=400)
+
+            if User.objects.filter(username=username).exists():
+                return JsonResponse({'message': 'ユーザー名は既に使われています'}, status=400)
+
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.save()
+
+            return JsonResponse({'message': '登録成功'}, status=201)
+
+        except Exception as e:
+            return JsonResponse({'message': f'エラーが発生しました: {str(e)}'}, status=500)
+    else:
+        return JsonResponse({'message': 'POSTリクエストをしてください'}, status=405)
