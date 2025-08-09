@@ -1,11 +1,12 @@
 // RegisterForm.jsx
-
+import "./Signin.css"
 import { useState } from "react";
 
-function RegisterForm() {
+function Signin() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [success, setSuccess] = useState();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,36 +26,47 @@ function RegisterForm() {
         const data = await response.json();
 
         if (response.ok) {
-            alert("ユーザー登録が成功しました！");
+            setSuccess(true);
+            setUsername("");
+            setEmail("");
+            setPassword("");
         } else {
-            alert("エラー: " + data.message);
+            alert("エラー:" + data.message);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>ユーザー登録</h2>
+        <>
+        <form onSubmit={handleSubmit} id="SigninComponent">
+            <h1 className="SigninTitle">ユーザー登録</h1>
             <input
+                className="Signinput"
                 type="text"
                 placeholder="ユーザー名"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
             /><br />
             <input
+                className="Signinput"
                 type="email"
                 placeholder="メールアドレス"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             /><br />
             <input
+                className="Signinput"
                 type="password"
                 placeholder="パスワード"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             /><br />
-            <button type="submit">登録</button>
+            <button className="SigninButton" type="submit">登録</button>
         </form>
+
+        {success && <p style={{color: "blue"}}>作成できました</p>}
+
+        </>
     );
 }
 
-export default RegisterForm;
+export default Signin;

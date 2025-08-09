@@ -1,14 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
-import WeatherDisplay from './WeatherDisplay';
-import RegisterForm from './Signin';
+import { BrowserRouter, Routes, Route, useLocation, Link } from "react-router-dom";
+import Home from "./Home";
+import Login from "./Login";
+import Signin from "./Signin";
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+
   return (
-    <>
-    <RegisterForm></RegisterForm>
-    </>
+    <div>
+      {location.pathname === "/" && (
+        <Link to="/login">
+          <button className='LoginButton'>ログイン</button>
+        </Link>
+      )}
+
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signin" element={<Signin />} />
+      </Routes>
+    </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  );
+}
