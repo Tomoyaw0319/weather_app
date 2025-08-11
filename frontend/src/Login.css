@@ -13,7 +13,7 @@
 .Loginput {
     width: 300px;
     height: 40px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     background-color: rgb(78, 78, 78);
     border: 2px solid rgb(200, 200, 200);
     color: white;
@@ -25,7 +25,11 @@
 .Loginput:focus {
     border: skyblue solid;
     outline: none;
+}
 
+.logintitle {
+    color: white;
+    padding-bottom: 30px;
 }
 
 .logintext {
@@ -50,4 +54,14 @@
     font-size: 16px;
     color: white;
     opacity: 0.8;
+}
+
+.Error {
+    color: black;
+    background-color: orange;
+    padding: 10px;
+    border-radius: 6px;
+    width: 300px;
+    margin-bottom: 40px;
+    text-align: left;
 }

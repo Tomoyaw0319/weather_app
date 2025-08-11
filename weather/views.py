@@ -41,9 +41,21 @@ def register(request):
             username = data.get('username')
             email = data.get('email')
             password = data.get('password')
+            password2 = data.get('password2')
 
-            if not username or not password:
-                return JsonResponse({'message': 'ユーザー名とパスワードは必須です'}, status=400)
+            errors = {}
+
+            if not username:
+                errors["username"] = "ユーザー名が空欄です"
+            if not email:
+                errors["email"] = "E-mailが空欄です"
+            if not password:
+                errors["password"] = "パスワードが空欄です"
+            if password != password2:
+                errors["password2"] = "パスワードが一致しません"
+                
+            if errors:
+                return JsonResponse({"errors": errors}, status = 400)
 
             if User.objects.filter(username=username).exists():
                 return JsonResponse({'message': 'ユーザー名は既に使われています'}, status=400)

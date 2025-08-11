@@ -6,9 +6,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 20px 20px;
     background-color: rgba(31, 31, 31, 0.8);
-    padding: 0px 30px 40px;
+    padding: 20px 20px;
 }
 
 .SigninTitle {
@@ -19,13 +18,18 @@
 .Signinput {
     width: 300px;
     height: 40px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     background-color: rgb(78, 78, 78);
     border: 2px solid rgb(200, 200, 200);
     color: white;
     border-radius: 5px;
     font-size: 16px;
     opacity: 0.8;
+}
+
+.Signinput:focus {
+    border: skyblue solid;
+    outline: none;
 }
 
 .SigninButton {
@@ -36,4 +40,19 @@
     color: white;
     border-radius: 6px;
     margin-bottom: 15px;
+}
+
+.ErrorMsg {
+    color: red;
+}
+
+.ErrorImg {
+    width: 30px;
+}
+
+.Error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: -20px;
 }

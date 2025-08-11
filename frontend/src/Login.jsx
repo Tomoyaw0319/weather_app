@@ -33,8 +33,8 @@ function Login() {
                 navigate("/home")
             }
             else {
-                setSuccess(false)
-                setError(data.message || "ログインに失敗しました");
+                setSuccess(false);
+                setError(`${email}`)
             }
         } catch (error){
             setError("通信エラーが発生しました");
@@ -43,15 +43,16 @@ function Login() {
 
     return (
         <form id="LoginComponent" onSubmit={handleLogin}>
-            <h1 className="logintext">ログイン</h1>
+            <h1 className="logintitle">ログイン</h1>
 
+            {error && <p className="Error">{error}のパスワードが正しくありません<br/>パスワードかE-mailをもう一度お試しください。</p>}
             <input 
                 className="Loginput" 
-                type="email" 
+                type="text" 
                 placeholder="メールアドレス" 
                 value={email} 
                 onChange={(e) => setEmail(e.target.value)} 
-                required/><br />
+                required/>
 
             <input 
                 className="Loginput" 
@@ -59,8 +60,7 @@ function Login() {
                 placeholder="パスワード" 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)} 
-                required/><br />
-
+                required/>
             <button
                 className="loginButton"
                 type="submit"

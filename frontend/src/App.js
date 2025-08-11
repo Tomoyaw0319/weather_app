@@ -3,24 +3,29 @@ import { BrowserRouter, Routes, Route, useLocation, Link } from "react-router-do
 import Home from "./Home";
 import Login from "./Login";
 import Signin from "./Signin";
+import LayoutAfterLogin from './LayoutAfterLogin';
+import LayoutBeforeLogin from './LayoutBeforeLogin';
 
 function AppContent() {
   const location = useLocation();
 
-  return (
-    <div>
-      {location.pathname === "/" && (
-        <Link to="/login">
-          <button className='LoginButton'>ログイン</button>
-        </Link>
-      )}
+  const beforeLoginPaths = ["/", "/login", "/signin"];
+  const isBeforeLogin = beforeLoginPaths.includes(location.pathname);
 
+  return isBeforeLogin ? (
+    <LayoutBeforeLogin>
       <Routes>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<Signin />} />
       </Routes>
-    </div>
+    </LayoutBeforeLogin>
+  ) : (
+    <LayoutAfterLogin>
+      <Routes>
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </LayoutAfterLogin>
   );
 }
 
