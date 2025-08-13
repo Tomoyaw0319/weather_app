@@ -34,9 +34,8 @@ function Login() {
             }
             else {
                 setSuccess(false);
-                setError(`${email}`)
-            }
-        } catch (error){
+                setError(`${email}のパスワードが正しくありません\nパスワードかE-mailをもう一度お試しください。`);
+        }}catch (error){
             setError("通信エラーが発生しました");
         }
     };
@@ -45,7 +44,7 @@ function Login() {
         <form id="LoginComponent" onSubmit={handleLogin}>
             <h1 className="logintitle">ログイン</h1>
 
-            {error && <p className="Error">{error}のパスワードが正しくありません<br/>パスワードかE-mailをもう一度お試しください。</p>}
+            {error && <p className="Error">{error}</p>}
             <input 
                 className="Loginput" 
                 type="text" 

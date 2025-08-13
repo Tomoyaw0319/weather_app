@@ -24,6 +24,7 @@ def get_weather(request):
 
     
     result = {
+        'id': data['weather'][0]['id'],
         'city': city,
         'temperature': data['main']['temp'],           
         'condition': data['weather'][0]['description'], 

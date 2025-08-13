@@ -1,3 +1,45 @@
 body {
-  background: white !important; /* 背景を白に固定 */
+  background: white;
+}
+
+.Weather_data {
+  position: fixed;
+  display: flex;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+.location {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -45%);
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: black;
+  z-index: 1;
+  font-size: 80px;
+}
+
+
+
+
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 40vh;
+  object-fit: cover;
+  z-index: 1;
 }

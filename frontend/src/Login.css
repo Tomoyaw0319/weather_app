@@ -64,4 +64,5 @@
     width: 300px;
     margin-bottom: 40px;
     text-align: left;
+    white-space: pre-line;
 }
