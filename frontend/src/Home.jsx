@@ -10,6 +10,13 @@ function Home() {
 
     const [weatherData, setWeatherData] = useState(null);
     const [id, setId] = useState("");
+    const [city, setCity] = useState("");
+
+    const fetchWeather = async () => {
+        const response = await fetch(`http://localhost:8000/api/get_weather?city=${city}`);
+        const data = await response.json();
+        setWeatherData(data);
+    };
 
     
     function getWeatherCategory(code) {
@@ -21,7 +28,6 @@ function Home() {
     }
 
     useEffect(() => {
-
         fetch('http://localhost:8000/api/weather/')
         .then(response => response.json())
         .then(data => {
@@ -34,7 +40,6 @@ function Home() {
     useEffect(() => {
     if (weatherData) {
         setId(getWeatherCategory(weatherData.id));
-        console.log("動画src:", getWeatherCategory(weatherData.id));
     }
     }, [weatherData]);
     
@@ -54,6 +59,18 @@ function Home() {
         <p><strong>天気:</strong> {weatherData.condition}</p>
         <p><strong>風速:</strong> {weatherData.wind}</p>
         </div>
+
+        <form className="locateInput" onSubmit={fetchWeather}>
+        <input 
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            placeholder="都市名"
+            >
+            </input>
+        <button type="submit"
+        value="locate">検索</button>
+        </form>
 
         </>
     )
