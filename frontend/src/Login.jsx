@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
 
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
@@ -21,7 +21,7 @@ function Login() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({email, password}),
+                body: JSON.stringify({username, password}),
             });
             
             const data = await response.json();
@@ -34,7 +34,7 @@ function Login() {
             }
             else {
                 setSuccess(false);
-                setError(`${email}のパスワードが正しくありません\nパスワードかE-mailをもう一度お試しください。`);
+                setError(`${username} のパスワードが正しくありません\nパスワードかE-mailをもう一度お試しください。`);
         }}catch (error){
             setError("通信エラーが発生しました");
         }
@@ -48,9 +48,9 @@ function Login() {
             <input 
                 className="Loginput" 
                 type="text" 
-                placeholder="メールアドレス" 
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
+                placeholder="ユーザーネーム" 
+                value={username} 
+                onChange={(e) => setUsername(e.target.value)} 
                 required/>
 
             <input 

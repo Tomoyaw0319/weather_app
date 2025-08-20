@@ -9,12 +9,15 @@ import json
 
 @api_view(['GET'])
 def get_weather(request):
-    city = request.GET.get('city', 'Tokyo')  
+    city = request.GET.get('city', 'Tokyo')
+    lat = request.GET.get('lat')
+    lon = request.GET.get('lon')
     api_key = '5645e7b257bdb1ff50ee6a8c8d6a37f9'
 
-    
-    url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric&lang=ja'
-
+    if lat and lon:
+        url = f'http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=metric&lang=ja'
+    else:
+        url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric&lang=ja'
     
     res = requests.get(url)
     data = res.json()
@@ -33,6 +36,34 @@ def get_weather(request):
 
     return Response(result)
 
+@api_view(['GET'])
+def get_coords(request):
+    city = request.GET.get("city", "Tokyo")
+    api_key = '5645e7b257bdb1ff50ee6a8c8d6a37f9'
+
+    if not city:
+        return Response({"error" : "都市名を指定してください"}, status=400)
+    
+    url = f"http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=1&appid={api_key}"
+
+    try:
+        res = requests.get(url)
+        data = res.json()
+
+        if len(data)==0:
+            return Response({"error" : "都市が見つかりません"}, status=400)
+
+        result = {
+            'name': data[0]['name'],
+            'lat': data[0]['lat'],
+            'lon': data[0]['lon'],
+            'country': data[0]['country']
+        }
+        return Response(result)
+
+    except Exception as e:
+        return Response({'error': f'APIリクエスト中にエラーが発生しました: {str(e)}'}, status=500)
+    
 
 @csrf_exempt 
 def register(request):
@@ -79,14 +110,14 @@ def login_views(request):
         return JsonResponse({"error": "POSTメソッドを使用してください"}, status=405)
 
     data = json.loads(request.body)
-    email = data.get("email")
+    username = data.get("username")
     password = data.get("password")
 
-    if not email or not password:
+    if not username or not password:
         return JsonResponse({"error": "メールアドレスとパスワードは必須です"}, status=400)
 
     try:
-        user = User.objects.get(email=email)
+        user = User.objects.get(username=username)
     except User.DoesNotExist:
         return JsonResponse({"error": "ユーザーが存在しません"}, status=400)
 

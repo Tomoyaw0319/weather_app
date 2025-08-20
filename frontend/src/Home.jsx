@@ -44,14 +44,15 @@ function Home() {
 
     return (
         <>
+        {id && 
         <video autoPlay loop muted playsInline className="background-video">
         <source src={id} type="video/mp4"/>
-        </video>
+        </video>}
         <h2 className="location">{weatherData.city}の天気</h2>
         <div className="Weather_data">
-        <p>気温: {weatherData.temperature}°C</p>
-        <p>天気: {weatherData.condition}</p>
-        <p>風速: {weatherData.wind}</p>
+        <p><strong>気温:</strong> {weatherData.temperature}°C</p>
+        <p><strong>天気:</strong> {weatherData.condition}</p>
+        <p><strong>風速:</strong> {weatherData.wind}</p>
         </div>
 
         </>
