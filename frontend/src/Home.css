@@ -48,3 +48,17 @@
   height: 24px;
   
 }
+
+.logout-button{
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 150px;
+  background-color: red;
+  border: none;
+  font-size: 16px;
+  color: white;
+  border-radius: 6px;
+}

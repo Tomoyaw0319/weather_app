@@ -1,69 +1,49 @@
-import requests
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login as auth_login
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+import requests
 import json
 
 @api_view(['GET'])
 def get_weather(request):
     city = request.GET.get('city', 'Tokyo')
-    lat = request.GET.get('lat')
-    lon = request.GET.get('lon')
-    api_key = '5645e7b257bdb1ff50ee6a8c8d6a37f9'
-
-    if lat and lon:
-        url = f'http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=metric&lang=ja'
-    else:
-        url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric&lang=ja'
-    
-    res = requests.get(url)
-    data = res.json()
-
-    if res.status_code != 200:
-        return Response({'error': '天気情報の取得に失敗しました'}, status=400)
-
-    
-    result = {
-        'id': data['weather'][0]['id'],
-        'city': city,
-        'temperature': data['main']['temp'],           
-        'condition': data['weather'][0]['description'], 
-        'wind' : data['wind']['speed']
-    }
-
-    return Response(result)
-
-@api_view(['GET'])
-def get_coords(request):
-    city = request.GET.get("city", "Tokyo")
     api_key = '5645e7b257bdb1ff50ee6a8c8d6a37f9'
 
     if not city:
-        return Response({"error" : "都市名を指定してください"}, status=400)
-    
-    url = f"http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=1&appid={api_key}"
+        return Response({"error": "都市名を指定してください"}, status=400)
 
-    try:
-        res = requests.get(url)
-        data = res.json()
+    geo_url = f"http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=1&appid={api_key}"
+    geo_res = requests.get(geo_url)
+    geo_data = geo_res.json()
 
-        if len(data)==0:
-            return Response({"error" : "都市が見つかりません"}, status=400)
+    if len(geo_data) == 0:
+        return Response({"error": "都市が見つかりません"}, status=404)
 
-        result = {
-            'name': data[0]['name'],
-            'lat': data[0]['lat'],
-            'lon': data[0]['lon'],
-            'country': data[0]['country']
-        }
-        return Response(result)
+    lat = geo_data[0]['lat']
+    lon = geo_data[0]['lon']
 
-    except Exception as e:
-        return Response({'error': f'APIリクエスト中にエラーが発生しました: {str(e)}'}, status=500)
-    
+    weather_url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=metric&lang=ja"
+    weather_res = requests.get(weather_url)
+    weather_data = weather_res.json()
+
+    if weather_res.status_code != 200:
+        return Response({'error': '天気情報の取得に失敗しました'}, status=400)
+
+    result = {
+        'city': geo_data[0]['name'],
+        'country': geo_data[0]['country'],
+        'lat': lat,
+        'lon': lon,
+        'temperature': weather_data['main']['temp'],
+        'condition': weather_data['weather'][0]['description'],
+        'wind': weather_data['wind']['speed'],
+        'id': weather_data['weather'][0]['id']
+    }
+
+    return Response(result)
 
 @csrf_exempt 
 def register(request):
@@ -128,3 +108,11 @@ def login_views(request):
         return JsonResponse({"message": "ログイン成功"})
     else:
         return JsonResponse({"error": "パスワードが間違っています"}, status=400)
+
+@csrf_exempt
+def logout_view(request):
+    if request.method == "POST":
+        auth_logout(request)
+        return JsonResponse({"message": "ログアウト成功"})
+    else:
+        return JsonResponse({"error": "POSTメソッドを使用してください"}, status=405)
