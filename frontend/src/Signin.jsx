@@ -12,6 +12,7 @@ function Signin() {
     const [password2, setPassword2] = useState("");
     const [success, setSuccess] = useState();
     const [errorMsg, setErrorMsg] = useState({username: "", email: "", password: "", password2: ""});
+    const [generalError, setGeneralError] = useState("");
 
     const navigate = useNavigate();
 
@@ -35,14 +36,18 @@ function Signin() {
 
         if (response.ok) {
             setSuccess(true);
+            setGeneralError("");
             setUsername("");
             setEmail("");
             setPassword("");
+            setPassword2("");
             setErrorMsg({ username: "", email: "", password: "", password2: ""});
             alert("作成できました")
             navigate("/login")
         } else {
+            setSuccess(false);
             setErrorMsg(data.errors || {});
+            setGeneralError(data.message || "登録に失敗しました");
         }
     };
 
@@ -50,6 +55,7 @@ function Signin() {
         <>
         <form onSubmit={handleSubmit} id="SigninComponent">
             <h1 className="SigninTitle">ユーザー登録</h1>
+            {generalError && <p className="ErrorMsg">{generalError}</p>}
         <div className="InputWrapper">
             <input
                 className="Signinput"
@@ -57,6 +63,7 @@ function Signin() {
                 placeholder="ユーザー名"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                required
             />
             {errorMsg.username && 
                 <div className="Error">
@@ -72,6 +79,7 @@ function Signin() {
                 placeholder="メールアドレス"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
             />
             {errorMsg.email && 
                     <div className="Error">
@@ -87,6 +95,7 @@ function Signin() {
                 placeholder="パスワード"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
             />
             {errorMsg.password && 
                     <div className="Error"> 
@@ -102,6 +111,7 @@ function Signin() {
                 placeholder="パスワード(確認用)"
                 value={password2}
                 onChange={(e) => setPassword2(e.target.value)}
+                required
             /> 
             {errorMsg.password2 && 
                     <div className="Error"> 
