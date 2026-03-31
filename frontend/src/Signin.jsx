@@ -19,35 +19,40 @@ function Signin() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch("https://weather-app-hxi5.onrender.com/register/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username,
-                email,
-                password,
-                password2
-            }),
-        });
+        try {
+            const response = await fetch("https://weather-app-hxi5.onrender.com/register/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    password,
+                    password2
+                }),
+            });
 
-        const data = await response.json();
+            const data = await response.json();
 
-        if (response.ok) {
-            setSuccess(true);
-            setGeneralError("");
-            setUsername("");
-            setEmail("");
-            setPassword("");
-            setPassword2("");
-            setErrorMsg({ username: "", email: "", password: "", password2: ""});
-            alert("作成できました")
-            navigate("/login")
-        } else {
+            if (response.ok) {
+                setSuccess(true);
+                setGeneralError("");
+                setUsername("");
+                setEmail("");
+                setPassword("");
+                setPassword2("");
+                setErrorMsg({ username: "", email: "", password: "", password2: ""});
+                alert("作成できました")
+                navigate("/login")
+            } else {
+                setSuccess(false);
+                setErrorMsg(data.errors || {});
+                setGeneralError(data.message || "登録に失敗しました");
+            }
+        } catch (error) {
             setSuccess(false);
-            setErrorMsg(data.errors || {});
-            setGeneralError(data.message || "登録に失敗しました");
+            setGeneralError("通信エラーが発生しました");
         }
     };
 

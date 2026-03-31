@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-6i--(iclhqrpno(@s=lb!)mni3@@82ww!g_ml1bu#w&z8vncdx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "weather-app-hxi5.onrender.com",
+]
 
 
 # Application definition
@@ -59,6 +63,12 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://weather-app-psi-five-swqltpt2ea.vercel.app",
+    "https://weather-app-git-main-tomoyaw0319-2138s-projects.vercel.app",
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
