@@ -67,7 +67,7 @@ function Signin() {
             />
             {errorMsg.username && 
                 <div className="Error">
-                    <img src={errorIcon} className="ErrorImg"/>
+                    <img src={errorIcon} className="ErrorImg" alt="" />
                     <p className="ErrorMsg">{errorMsg.username}</p>
                 </div>
             }
@@ -83,7 +83,7 @@ function Signin() {
             />
             {errorMsg.email && 
                     <div className="Error">
-                    <img src={errorIcon} className="ErrorImg"/>
+                    <img src={errorIcon} className="ErrorImg" alt="" />
                     <p className="ErrorMsg">{errorMsg.email}</p>
                 </div>
             }
@@ -99,7 +99,7 @@ function Signin() {
             />
             {errorMsg.password && 
                     <div className="Error"> 
-                    <img src={errorIcon} className="ErrorImg"/>
+                    <img src={errorIcon} className="ErrorImg" alt="" />
                     <p className="ErrorMsg">{errorMsg.password}</p>
                 </div>
             }
@@ -115,7 +115,7 @@ function Signin() {
             /> 
             {errorMsg.password2 && 
                     <div className="Error"> 
-                    <img src={errorIcon} className="ErrorImg"/>
+                    <img src={errorIcon} className="ErrorImg" alt="" />
                     <p className="ErrorMsg">{errorMsg.password2}</p>
                 </div>
             }
