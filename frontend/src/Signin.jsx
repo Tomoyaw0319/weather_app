@@ -42,7 +42,7 @@ function Signin() {
             setPassword("");
             setPassword2("");
             setErrorMsg({ username: "", email: "", password: "", password2: ""});
-            alert("作成できました")
+            alert("作�Eできました")
             navigate("/login")
         } else {
             setSuccess(false);
@@ -60,7 +60,7 @@ function Signin() {
             <input
                 className="Signinput"
                 type="text"
-                placeholder="ユーザー名"
+                placeholder="ユーザー吁E
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -92,7 +92,7 @@ function Signin() {
             <input
                 className="Signinput"
                 type="password"
-                placeholder="パスワード"
+                placeholder="パスワーチE
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -108,7 +108,7 @@ function Signin() {
             <input
                 className="Signinput"
                 type="password"
-                placeholder="パスワード(確認用)"
+                placeholder="パスワーチE確認用)"
                 value={password2}
                 onChange={(e) => setPassword2(e.target.value)}
                 required
@@ -123,10 +123,11 @@ function Signin() {
             <button className="SigninButton" type="submit">登録</button>
         </form>
 
-        {success && <p style={{color: "blue"}}>作成できました</p>}
+        {success && <p style={{color: "blue"}}>作�Eできました</p>}
 
         </>
     );
 }
 
 export default Signin;
+
