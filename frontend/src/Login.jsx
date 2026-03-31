@@ -27,7 +27,7 @@ function Login() {
         console.log("ログイン成功:", data);
         navigate("/home");
       } else {
-        setError(`${username} のパスワードが正しくありません\nパスワードかE-mailをもう一度お試しください。`);
+        setError(`${username} のパスワードが正しくありません\nユーザー名またはE-mailをもう一度お試しください。`);
       }
     } catch (error) {
       setError("通信エラーが発生しました");
@@ -42,7 +42,7 @@ function Login() {
       <input
         className="Loginput"
         type="text"
-        placeholder="ユーザーネーム"
+        placeholder="ユーザー名またはメール"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         required

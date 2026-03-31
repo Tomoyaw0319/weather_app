@@ -190,15 +190,14 @@ def login_views(request):
         return JsonResponse({"error": "POSTメソッドを使用してください"}, status=405)
 
     data = json.loads(request.body)
-    username = data.get("username")
+    identifier = data.get("username")
     password = data.get("password")
 
-    if not username or not password:
-        return JsonResponse({"error": "メールアドレスとパスワードは必須です"}, status=400)
+    if not identifier or not password:
+        return JsonResponse({"error": "ユーザー名またはメールアドレスとパスワードは必須です"}, status=400)
 
-    try:
-        user = User.objects.get(username=username)
-    except User.DoesNotExist:
+    user = User.objects.filter(username=identifier).first() or User.objects.filter(email=identifier).first()
+    if user is None:
         return JsonResponse({"error": "ユーザーが存在しません"}, status=400)
 
     user_auth = authenticate(request, username=user.username, password=password)
