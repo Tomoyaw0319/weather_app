@@ -6,7 +6,7 @@ function WeatherDisplay() {
 
     useEffect(() => {
 
-        fetch('http://localhost:8000/api/weather/')
+        fetch('https://weather-app-hxi5.onrender.com/api/weather/')
         .then(response => response.json())
         .then(data => {
             setWeatherData(data);

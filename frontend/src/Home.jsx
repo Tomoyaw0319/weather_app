@@ -21,7 +21,7 @@ function Home() {
         console.log("fetchWeatherが呼ばれました。city:", query);
 
         try {
-            const response = await fetch(`http://localhost:8000/api/weather?city=${encodeURIComponent(query)}`);
+            const response = await fetch(`https://weather-app-hxi5.onrender.com/api/weather?city=${encodeURIComponent(query)}`);
             const data = await response.json();
             console.log("APIからのデータ:", data);
             setWeatherData(data);
@@ -41,7 +41,7 @@ function Home() {
     }
 
     useEffect(() => {
-        fetch("http://localhost:8000/api/weather/")
+        fetch("https://weather-app-hxi5.onrender.com/api/weather/")
             .then((response) => response.json())
             .then((data) => {
                 setWeatherData(data);
@@ -67,7 +67,7 @@ function Home() {
         }
         const timer = setTimeout(async () => {
             try {
-                const res = await fetch(`http://localhost:8000/api/city_suggestions/?q=${encodeURIComponent(q)}`);
+                const res = await fetch(`https://weather-app-hxi5.onrender.com/api/city_suggestions/?q=${encodeURIComponent(q)}`);
                 const data = await res.json();
                 if (Array.isArray(data)) setSuggestions(data);
             } catch (e) {
@@ -83,7 +83,7 @@ function Home() {
 
     const handleLogout = async () => {
     try {
-        const response = await fetch("http://localhost:8000/api/logout/", {
+        const response = await fetch("https://weather-app-hxi5.onrender.com/api/logout/", {
             method: "POST",
             credentials: "include",
         });
